@@ -52,6 +52,12 @@ describe Board do
     @board.check(x_y.first, x_y.last).must_equal :sunk
   end
 
+  it "determine overlaping cells" do
+    ship = Ship.new(:battleship)
+    @board.place_random(ship)
+    @board.overlap(ship.cells).must_equal true
+  end
+
   private
   def find_cell_cordinates(cell)
     @board.grid.each_with_index do |row, i|

@@ -1,7 +1,7 @@
 class Ship
   attr_accessor :cells, :size
 
-  def initialize(type)
+  def initialize(type = :battleship)
     case type
       when :battleship
         @size = 5
