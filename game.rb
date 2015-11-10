@@ -6,8 +6,9 @@ class Game
   def play
     print @board.to_grid_s
 
+    round  = 0
     loop do
-
+      round += 1
       print 'Enter coordinates (row, col), e.g. A5 = '
 
       input = gets.chomp.strip.upcase
@@ -16,17 +17,19 @@ class Game
         next
       end
 
-      p input_valid?(input) ? 'valid' : 'invalid'
-
+      message = ''
       if input_valid?(input)
         x, y = [input[0], input[1..-1]]
-        @board.check(x, y)
+        status = @board.check(x, y)
+        message << "Miss\n" if status == :miss
+        message << "Sunk\n" if status == :sunk
       end
 
+      message << @board.to_grid_s
+      print message
 
-      print @board.to_grid_s
       if @board.finished?
-        print "Well done! You completed the game in 14 shots\n"
+        print "Well done! You completed the game in #{round} shots\n"
         break
       end
     end
