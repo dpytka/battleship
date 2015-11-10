@@ -57,6 +57,16 @@ class Board
     board
   end
 
+  def check(x, y)
+    cell = @grid[ROW.index(x)][y.to_i - 1]
+
+    if @ships.flat_map {|ship| ship.cells}.include?(cell)
+      cell.hit!
+    else
+      cell.miss!
+    end
+  end
+
   def finished?
     @ships.all?(&:sunk?)
   end

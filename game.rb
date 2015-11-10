@@ -10,8 +10,8 @@ class Game
 
       print 'Enter coordinates (row, col), e.g. A5 = '
 
-      input = gets.chomp.strip.downcase
-      if input == 'show'
+      input = gets.chomp.strip.upcase
+      if input == 'SHOW'
         print @board.to_grid_s(:show)
         next
       end
@@ -19,7 +19,8 @@ class Game
       p input_valid?(input) ? 'valid' : 'invalid'
 
       if input_valid?(input)
-
+        x, y = [input[0], input[1..-1]]
+        @board.check(x, y)
       end
 
 
@@ -33,6 +34,6 @@ class Game
   end
 
   def input_valid?(input)
-    input =~ /^[a-j]([1-9]|10)$/
+    input =~ /^[A-J]([1-9]|10)$/
   end
 end

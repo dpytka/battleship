@@ -10,7 +10,6 @@ ships = [
 ]
 ships.each { |ship|
   board.place_random(ship)
-  ship.hit
 }
 
 game = Game.new(board)
