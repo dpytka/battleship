@@ -7,15 +7,9 @@ class Ship
         @size = 5
       when :destroyer
         @size = 4
-      else
-        raise
     end
 
     @cells = []
-  end
-
-  def hit
-    @cells.each {|cell| cell.hit!}
   end
 
   def sunk?
