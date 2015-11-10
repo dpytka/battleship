@@ -44,6 +44,8 @@ class Board
 
       if hit_ship.sunk?
         :sunk
+      else
+        :hit
       end
     else
       cell.miss!
