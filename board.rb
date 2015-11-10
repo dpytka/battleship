@@ -8,16 +8,7 @@ class Board
 
   def initialize
     @grid = Array.new(DIM) { Array.new(DIM) { Cell.new } }
-
-    @ships = [
-        Ship.new(:battleship),
-        Ship.new(:destroyer),
-        Ship.new(:destroyer)
-    ]
-    @ships.each { |ship|
-      place_random(ship)
-      ship.hit
-    }
+    @ships = []
   end
 
   def place_random(ship)
@@ -39,6 +30,7 @@ class Board
       cells.each { |cell| cell.ship = ship }
       break
     end
+    @ships << ship
   end
 
   def overlap(cells)
