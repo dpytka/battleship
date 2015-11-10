@@ -4,7 +4,7 @@ class Game
   end
 
   def play
-    print @board.to_grid_s
+    puts @board.to_grid_s
 
     round  = 0
     loop do
@@ -13,7 +13,7 @@ class Game
 
       input = gets.chomp.strip.upcase
       if input == 'SHOW'
-        print @board.to_grid_s(:show)
+        puts @board.to_grid_s(:show)
         next
       end
 
@@ -26,10 +26,10 @@ class Game
       end
 
       message << @board.to_grid_s
-      print message
+      puts message
 
       if @board.finished?
-        print "Well done! You completed the game in #{round} shots\n"
+        puts "Well done! You completed the game in #{round} shots"
         break
       end
     end

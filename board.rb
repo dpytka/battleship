@@ -13,7 +13,7 @@ class Board
 
   def place_random(ship)
     loop do
-      orient = [:vert, :hor][rand(2)]
+      orient = [:vert, :hor].sample
       if orient == :hor
         start_x = rand(Board::DIM)
         start_y = rand(Board::DIM - ship.size)
@@ -24,7 +24,6 @@ class Board
         cells = @grid.transpose[start_y][start_x...start_x + ship.size]
       end
 
-      p "#{start_x},#{start_y} #{orient}"
       next if overlap(cells)
       ship.cells = cells
       cells.each { |cell| cell.ship = ship }
@@ -64,7 +63,7 @@ class Board
     if hit_ship.any?
       cell.hit!
 
-      if hit_ship[0].sunk?
+      if hit_ship.first.sunk?
         :sunk
       end
     else
