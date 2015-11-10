@@ -1,4 +1,6 @@
 class Ship
+  attr_accessor :cells, :size
+
   def initialize(type)
     case type
       when :battleship
@@ -8,23 +10,8 @@ class Ship
       else
         raise
     end
-  end
 
-  def place(grid)
-    orientation = [:vert, :hor][rand(2)]
-
-    case orientation
-      when :hor
-        start_x = rand(Board::DIM); start_y = rand(Board::DIM - @size)
-        @cells = grid[start_x][start_y..(start_y)+@size]
-      when :vert
-        start_x = rand(Board::DIM - @size); start_y = rand(Board::DIM)
-        @cells = grid.map {|a| a[start_y]}[start_x..(start_x)+@size]
-      else
-        raise
-    end
-
-    p "#{start_x},#{start_y} #{orientation}"
+    @cells = []
   end
 
   def hit
