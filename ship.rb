@@ -17,4 +17,8 @@ class Ship
   def hit
     @cells.each {|cell| cell.hit!}
   end
+
+  def sunk?
+    @cells.all? {|cell| cell.status == :hit}
+  end
 end

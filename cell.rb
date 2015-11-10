@@ -1,4 +1,6 @@
 class Cell
+  attr_reader :status
+
   def initialize
     @status = :no_shot
   end

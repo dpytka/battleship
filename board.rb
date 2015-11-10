@@ -50,4 +50,8 @@ class Board
       print "#{ROW[index]} #{row.join(' ')}\n"
     }
   end
+
+  def finished?
+    @ships.all?(&:sunk?)
+  end
 end
