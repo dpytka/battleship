@@ -8,7 +8,6 @@ class Game
 
     round  = 0
     loop do
-      round += 1
       print 'Enter coordinates (row, col), e.g. A5 = '
 
       input = gets.chomp.strip.upcase
@@ -28,6 +27,7 @@ class Game
       message << @board.to_grid_s
       puts message
 
+      round += 1
       if @board.finished?
         puts "Well done! You completed the game in #{round} shots"
         break
