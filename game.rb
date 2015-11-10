@@ -17,9 +17,17 @@ class Game
       end
 
       p input_valid?(input) ? 'valid' : 'invalid'
+
+      if input_valid?(input)
+
+      end
+
+
       print @board.to_grid_s
-
-
+      if @board.finished?
+        print "Well done! You completed the game in 14 shots\n"
+        break
+      end
     end
 
   end
