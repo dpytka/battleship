@@ -41,7 +41,7 @@ class Board
   end
 
   def occupied(cells)
-    (@ships.collect { |ship| ship.cells }.flatten & cells).any?
+    (@ships.flat_map(&:cells) & cells).any?
   end
 
   def draw
