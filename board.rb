@@ -21,19 +21,27 @@ class Board
   end
 
   def place_random(ship)
-    orient = [:vert, :hor][rand(2)]
+    loop do
+      orient = [:vert, :hor][rand(2)]
+      if orient == :hor
+        start_x = rand(Board::DIM)
+        start_y = rand(Board::DIM - ship.size)
+        cells = @grid[start_x][start_y...start_y + ship.size]
+      else
+        start_x = rand(Board::DIM - ship.size)
+        start_y = rand(Board::DIM)
+        cells = @grid.transpose[start_y][start_x...start_x + ship.size]
+      end
 
-    if orient == :hor
-      start_x = rand(Board::DIM)
-      start_y = rand(Board::DIM - ship.size)
-      ship.cells = @grid[start_x][start_y..start_y + ship.size]
-    else
-      start_x = rand(Board::DIM - ship.size)
-      start_y = rand(Board::DIM)
-      ship.cells = @grid.transpose[start_y][start_x..start_x + ship.size]
+      p "#{start_x},#{start_y} #{orient}"
+      next if occupied(cells)
+      ship.cells = cells
+      break
     end
+  end
 
-    p "#{start_x},#{start_y} #{orient}"
+  def occupied(cells)
+    (@ships.collect { |ship| ship.cells }.flatten & cells).any?
   end
 
   def draw
