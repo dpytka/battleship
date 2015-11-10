@@ -26,7 +26,6 @@ class Board
 
       next if overlap(cells)
       ship.cells = cells
-      cells.each { |cell| cell.ship = ship }
       break
     end
     @ships << ship
@@ -38,16 +37,23 @@ class Board
 
   def check(x, y)
     cell = @grid[ROW.index(x)][y.to_i - 1]
+    hit_ship = cell_ship(cell)
 
-    if cell.ship
+    if hit_ship
       cell.hit!
-      if cell.ship.sunk?
+
+      if hit_ship.sunk?
         :sunk
       end
     else
       cell.miss!
       :miss
     end
+  end
+
+  def cell_ship(cell)
+    ship = @ships.select {|ship| ship.cells.include?(cell)}
+    ship.empty? ? nil : ship[0]
   end
 
   def finished?
@@ -60,7 +66,7 @@ class Board
       board << "#{ROW[index]} "
       board << row.collect do |cell|
         if mode == :show
-          cell.ship ? 'x' : ' '
+          cell_ship(cell) ? 'x' : ' '
         elsif cell.status == :hit
           'x'
         elsif cell.status == :miss
