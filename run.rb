@@ -1,7 +1,6 @@
 require './board'
+require './game'
 
-b = Board.new
-
-b.draw
-
-p "finnished" if b.finished?
+board = Board.new
+game = Game.new(board)
+game.play

@@ -1,8 +1,10 @@
 class Cell
+  attr_accessor :ship
   attr_reader :status
 
   def initialize
     @status = :no_shot
+    @ship = nil
   end
 
   def hit!
@@ -11,18 +13,5 @@ class Cell
 
   def miss!
     @status = :miss
-  end
-
-  def to_s
-    case @status
-      when :no_shot
-        '.'
-      when :hit
-        'x'
-      when :miss
-        '-'
-      else
-        raise
-    end
   end
 end

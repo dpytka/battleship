@@ -34,21 +34,35 @@ class Board
       end
 
       p "#{start_x},#{start_y} #{orient}"
-      next if occupied(cells)
+      next if overlap(cells)
       ship.cells = cells
+      cells.each { |cell| cell.ship = ship }
       break
     end
   end
 
-  def occupied(cells)
+  def overlap(cells)
     (@ships.flat_map(&:cells) & cells).any?
   end
 
-  def draw
-    print "  #{COL.join(' ')}\n"
+  def to_grid_s(mode = :game)
+    board = "  #{COL.join(' ')}\n"
     @grid.each_with_index { |row, index|
-      print "#{ROW[index]} #{row.join(' ')}\n"
+      board << "#{ROW[index]} "
+      board << row.collect do |cell|
+        if mode == :show
+          cell.ship ? 'x' : ' '
+        elsif cell.status == :hit
+          'x'
+        elsif cell.status == :miss
+          '-'
+        else
+          '.'
+        end
+      end.join(' ')
+      board << "\n"
     }
+    board
   end
 
   def finished?
