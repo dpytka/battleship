@@ -15,12 +15,12 @@ class Board
     loop do
       orient = [:vert, :hor].sample
       if orient == :hor
-        start_x = rand(Board::DIM)
-        start_y = rand(Board::DIM - ship.size)
+        start_x = rand(DIM)
+        start_y = rand(DIM - ship.size)
         cells = @grid[start_x][start_y...start_y + ship.size]
       else
-        start_x = rand(Board::DIM - ship.size)
-        start_y = rand(Board::DIM)
+        start_x = rand(DIM - ship.size)
+        start_y = rand(DIM)
         cells = @grid.transpose[start_y][start_x...start_x + ship.size]
       end
 
@@ -34,6 +34,24 @@ class Board
 
   def overlap(cells)
     (@ships.flat_map(&:cells) & cells).any?
+  end
+
+  def check(x, y)
+    cell = @grid[ROW.index(x)][y.to_i - 1]
+
+    if cell.ship
+      cell.hit!
+      if cell.ship.sunk?
+        :sunk
+      end
+    else
+      cell.miss!
+      :miss
+    end
+  end
+
+  def finished?
+    @ships.all?(&:sunk?)
   end
 
   def to_grid_s(mode = :game)
@@ -54,25 +72,5 @@ class Board
       board << "\n"
     }
     board
-  end
-
-  def check(x, y)
-    cell = @grid[ROW.index(x)][y.to_i - 1]
-    hit_ship = @ships.select {|ship| ship.cells.include?(cell)}
-
-    if hit_ship.any?
-      cell.hit!
-
-      if hit_ship.first.sunk?
-        :sunk
-      end
-    else
-      cell.miss!
-      :miss
-    end
-  end
-
-  def finished?
-    @ships.all?(&:sunk?)
   end
 end
