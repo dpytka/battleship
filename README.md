@@ -3,5 +3,5 @@
 run game: ruby run.rb
 
 run test:
- - gem install ministest
+ - gem install minitest
  - rake test
